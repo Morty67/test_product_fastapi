@@ -8,6 +8,7 @@ class Product(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
     description = Column(String(255))
+    price = Column(Integer)
     created_at = Column(DateTime, default=datetime.now())
 
     def __repr__(self):
