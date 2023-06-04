@@ -3,3 +3,4 @@ __pycache__
 .env
 env
 products.db
+.pytest_cache
