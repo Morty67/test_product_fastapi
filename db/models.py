@@ -9,6 +9,8 @@ class Product(Base):
     name = Column(String(255), unique=True)
     description = Column(String(255))
     price = Column(Integer)
+    quantity = Column(Integer)
+    category = Column(String(255))
     created_at = Column(DateTime, default=datetime.now())
 
     def __repr__(self):
