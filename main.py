@@ -36,7 +36,7 @@ def create_product(
     product: schemas.ProductCreate, db: Session = Depends(get_db)
 ):
     db_product = crud.create_product(db=db, product=product)
-    return schemas.Product.from_orm(db_product)
+    return db_product
 
 
 @app.put("/products/{product_id}", response_model=schemas.Product)
@@ -50,7 +50,7 @@ def update_product(
     )
     if not db_product:
         raise HTTPException(status_code=404, detail="Product not found")
-    return schemas.Product.from_orm(db_product)
+    return db_product
 
 
 @app.delete("/products/{product_id}")

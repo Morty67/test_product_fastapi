@@ -8,6 +8,8 @@ class ProductBase(BaseModel):
     name: str
     description: str
     price: float
+    quantity: int
+    category: str
 
 
 class ProductCreate(ProductBase):

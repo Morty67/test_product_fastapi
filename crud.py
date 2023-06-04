@@ -17,6 +17,8 @@ def create_product(db: Session, product: ProductCreate):
         name=product.name,
         description=product.description,
         price=product.price,
+        quantity=product.quantity,
+        category=product.category,
     )
     db.add(db_product)
     db.commit()
@@ -29,6 +31,8 @@ def update_product(db: Session, product_id: int, product: ProductCreate):
     db_product.name = product.name
     db_product.description = product.description
     db_product.price = product.price
+    db_product.quantity = product.quantity
+    db_product.category = product.category
     db.commit()
     db.refresh(db_product)
     return db_product
