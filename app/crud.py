@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
-from db.models import Product
-from schemas import ProductCreate
+from app.models.models import Product
+from app.serializers.schemas import ProductCreate
 
 
 def get_all_products(db: Session):

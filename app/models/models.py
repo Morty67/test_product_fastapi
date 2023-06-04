@@ -1,6 +1,6 @@
 from datetime import datetime
-from db.engine import Base
-from sqlalchemy import Column, String, Integer,  DateTime
+from app.database.engine import Base
+from sqlalchemy import Column, String, Integer, DateTime, Float
 
 
 class Product(Base):
@@ -8,7 +8,7 @@ class Product(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(255), unique=True)
     description = Column(String(255))
-    price = Column(Integer)
+    price = Column(Float)
     quantity = Column(Integer)
     category = Column(String(255))
     created_at = Column(DateTime, default=datetime.now())
