@@ -9,7 +9,7 @@ class ProductBase(BaseModel):
     description: str
     price: float
     quantity: int
-    category: str
+    category_id: int
 
 
 class ProductCreate(ProductBase):
@@ -23,6 +23,25 @@ class ProductUpdate(ProductBase):
 class Product(ProductBase):
     id: int
     created_at: Optional[datetime] = datetime.now()
+
+    class Config:
+        orm_mode = True
+
+
+class CategoryBase(BaseModel):
+    name: str
+
+
+class CategoryCreate(CategoryBase):
+    pass
+
+
+class CategoryUpdate(CategoryBase):
+    pass
+
+
+class Category(CategoryBase):
+    id: int
 
     class Config:
         orm_mode = True
