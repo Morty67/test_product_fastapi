@@ -1,11 +1,21 @@
 from sqlalchemy.orm import Session
 
-from app.models.models import Product
+from app.models.models import Product, Category
 from app.serializers.schemas import ProductCreate
 
 
-def get_all_products(db: Session):
-    return db.query(Product).all()
+def get_all_products(db: Session, offset: int, limit: int):
+    return db.query(Product).offset(offset).limit(limit).all()
+
+
+def get_all_products_sorted_by_price(db: Session, offset: int, limit: int):
+    return (
+        db.query(Product)
+        .order_by(Product.price)
+        .offset(offset)
+        .limit(limit)
+        .all()
+    )
 
 
 def get_product_by_id(db: Session, product_id: int):
@@ -18,7 +28,7 @@ def create_product(db: Session, product: ProductCreate):
         description=product.description,
         price=product.price,
         quantity=product.quantity,
-        category=product.category,
+        category_id=product.category_id,
     )
     db.add(db_product)
     db.commit()
@@ -32,7 +42,8 @@ def update_product(db: Session, product_id: int, product: ProductCreate):
     db_product.description = product.description
     db_product.price = product.price
     db_product.quantity = product.quantity
-    db_product.category = product.category
+    category = db.query(Category).get(product.category_id)
+    db_product.category = category
     db.commit()
     db.refresh(db_product)
     return db_product
