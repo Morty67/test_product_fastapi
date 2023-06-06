@@ -4,12 +4,20 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from app import crud
+from app.models.models import Product
 from app.serializers import schemas
 
 
 class ProductService:
-    def get_all_products(self, db: Session) -> List[schemas.Product]:
-        return crud.get_all_products(db=db)
+    def get_all_products(
+        self, db: Session, offset: int, limit: int, order_by: str = "id"
+    ) -> List[schemas.Product]:
+        if order_by == "price":
+            return crud.get_all_products_sorted_by_price(
+                db=db, offset=offset, limit=limit
+            )
+        else:
+            return crud.get_all_products(db=db, offset=offset, limit=limit)
 
     def get_product_by_id(
         self, db: Session, product_id: int
@@ -30,6 +38,10 @@ class ProductService:
 
     def delete_product(self, db: Session, product_id: int) -> bool:
         return crud.delete_product(db=db, product_id=product_id)
+
+    def delete_all_products(self, db: Session):
+        db.query(Product).delete()
+        db.commit()
 
 
 class ProductValidator:
